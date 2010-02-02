@@ -107,10 +107,10 @@
 				<tr>
 					<th align="left">benchmark</th>
 					<th align="right">count</th>
-					<th align="right">avg_time</th>
-					<th align="right">total_time</th>
-					<th align="right">avg_memory</th>
-					<th align="right">total_memory</th>
+					<th align="right">avg time</th>
+					<th align="right">total time</th>
+					<th align="right">avg memory</th>
+					<th align="right">total memory</th>
 				</tr>
 				<?php if (count($benchmarks)):
 					$application = array_pop($benchmarks);?>
@@ -156,25 +156,19 @@
 					<th>time</th>
 					<th>memory</th>
 				</tr>
-				<?php $total_time = $total_memory = 0; ?>
 				<?php foreach ($queries as $db_profile => $stats):
-					$sub_count = $sub_time = $sub_memory = 0; ?>
+					list($sub_count, $sub_time, $sub_memory) = array_pop($stats); ?>
 				<tr align="left">
 					<th colspan="4">DATABASE "<?php echo strtoupper($db_profile) ?>"</th>
 				</tr>
-					<? foreach ($stats as $query): ?>
+					<? foreach ($stats as $num => $query): ?>
 					<tr class="<?php echo text::alternate('odd','even') ?>">
-						<td><?php echo ++$sub_count ?></td>
+						<td><?php echo $num+1 ?></td>
 						<td><?php echo $query['name'] ?></td>
-						<td><?php echo number_format($query[0] * 1000, 3) ?> ms</td>
-						<td><?php echo number_format($query[1] / 1024, 3) ?> kb</td>
+						<td><?php echo number_format($query['time'] * 1000, 3) ?> ms</td>
+						<td><?php echo number_format($query['memory'] / 1024, 3) ?> kb</td>
 					</tr>
-					<?	$sub_time += $query[0];
-						$sub_memory += $query[1];
-						endforeach;
-						$total_time += $sub_time;
-						$total_memory += $sub_memory;
-					?>
+					<?	endforeach;	?>
 					<tr>
 						<th>&nbsp;</th>
 						<th><?php echo $sub_count ?> total</th>
@@ -282,8 +276,8 @@
 				<tr align="left">
 					<th>#</th>
 					<th>name</th>
-					<th>rel_path</th>
-					<th>abs_path</th>
+					<th>rel path</th>
+					<th>abs path</th>
 				</tr>
 				<?php foreach($modules as $name => $path): ?>
 				<tr class="<?php echo text::alternate('odd','even')?>">

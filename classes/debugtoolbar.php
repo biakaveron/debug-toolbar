@@ -20,7 +20,11 @@ class DebugToolbar
 		if (Kohana::config('debug_toolbar.panels.database') === TRUE)
 		{
 			$queries = self::get_queries();
-			$template->set('queries', $queries['data'])->set('query_count', $queries['count']);
+			$template
+				->set('queries', $queries['data'])
+				->set('query_count', $queries['count'])
+				->set('total_time', $queries['time'])
+				->set('total_memory', $queries['memory']);
 		}
 
 		// Files panel
@@ -107,7 +111,7 @@ class DebugToolbar
 	public static function get_queries()
 	{
 		$result = array();
-		$count = 0;
+		$count = $time = $memory = 0;
 
 		$groups = Profiler::groups();
 		foreach(Database::$instances as $name => $db)
@@ -116,16 +120,26 @@ class DebugToolbar
 			$group = arr::get($groups, $group_name, FALSE);
 
 			if ($group)
-			{
+			{					
+				$sub_time = $sub_memory = $sub_count = 0;
 				foreach ($group as $query => $tokens)
 				{
+					$sub_count += count($tokens);
 					foreach ($tokens as $token)
-						$result[$name][] = array('name' => $query) + Profiler::total($token);
-					$count += count($tokens);
+					{
+						$total = Profiler::total($token);
+						$sub_time += $total[0];
+						$sub_memory += $total[1];
+						$result[$name][] = array('name' => $query, 'time' => $total[0], 'memory' => $total[1]);
+					}
 				}
-			}
+				$count += $sub_count;
+				$time += $sub_time;
+				$memory += $sub_memory;
+				$result[$name]['total'] = array($sub_count, $sub_time, $sub_memory);
+			}		
 		}
-		return array('count' => $count, 'data' => $result);
+		return array('count' => $count, 'time' => $time, 'memory' => $memory, 'data' => $result);
 	}
 
 	/**
@@ -198,10 +212,10 @@ class DebugToolbar
 
 	/**
 	 * Add toolbar data to FirePHP console
-	 * @TODO  change benchmark logic to KO3 style
+	 * 
 	 */
 	private static function firephp()
-	{//return;
+	{
 		$firephp = FirePHP::getInstance(TRUE);
 		$firephp->fb('KOHANA DEBUG TOOLBAR:');
 
@@ -232,49 +246,54 @@ class DebugToolbar
 
 			$firephp->fb(array($message, $table), FirePHP::TABLE);
 		}
-return;
+
 		// Database
-		$queries = self::get_queries();
+		$query_stats = self::get_queries();
 
-		$total_time = $total_rows = 0;
+		//$total_time = $total_rows = 0;
 		$table = array();
-		$table[] = array('SQL Statement','Time','Rows');
+		$table[] = array('DB profile', 'SQL Statement','Time','Memory');
 
-		foreach ((array)$queries as $query)
-		{
-			$table[] = array(
-				str_replace("\n",' ',$query['query']),
-				number_format($query['time'], 3),
-				$query['rows']
-			);
-
-			$total_time += $query['time'];
-			$total_rows += $query['rows'];
+		foreach ((array)$query_stats['data'] as $db => $queries)
+		{unset($queries['total']);
+			foreach ($queries as $query)
+			{
+				$table[] = array(
+					$db,
+					str_replace("\n",' ',$query['name']),
+					number_format($query['time']*1000, 3),
+					number_format($query['memory']/1024, 3),
+				);
+			}
 		}
 
-		$message = 'Queries: '.count($queries).' SQL queries took '.
-			number_format($total_time, 3).' seconds and returned '.$total_rows.' rows';
+		$message = 'Queries: '.$query_stats['count'].' SQL queries took '.
+			number_format($query_stats['time'], 3).' seconds and '.$query_stats['memory'].' b';
 
 		$firephp->fb(array($message, $table), FirePHP::TABLE);
 
 		// Benchmarks
-		$benchmarks = self::get_benchmarks();
+		$groups = self::get_benchmarks();
+		// application benchmarks
+		$total = array_pop($groups);
 
 		$table = array();
-		$table[] = array('Benchmark', 'Time', 'Memory');
+		$table[] = array('Group', 'Benchmark', 'Count', 'Time', 'Memory');
 
-		foreach ((array)$benchmarks as $name => $benchmark)
+		foreach ((array)$groups as $group => $benchmarks)
 		{
-			$table[] = array(
-				ucwords(str_replace(array('_', '-'), ' ', str_replace(SYSTEM_BENCHMARK.'_', '', $name))),
-				number_format($benchmark['time'], 3). ' s',
-				text::bytes($benchmark['memory'])
-			);
+			foreach ((array)$benchmarks as $name => $benchmark)
+			{
+				$table[] = array(
+					ucfirst($group),
+					ucwords($benchmark['name']),
+					number_format($benchmark['total_time'], 3). ' s',
+					text::bytes($benchmark['total_memory']),
+				);
+			}
 		}
 
-		$message = 'Benchmarks: '.count($benchmarks).' benchmarks took '.
-			number_format($benchmark['time'], 3).' seconds and used up '.
-			text::bytes($benchmark['memory']).' memory';
+		$message = 'Application tooks '.number_format($total['total_time'], 3).' seconds and '.text::bytes($total['total_memory']).' memory';
 
 		$firephp->fb(array($message, $table), FirePHP::TABLE);
 	}
