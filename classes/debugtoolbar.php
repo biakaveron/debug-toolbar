@@ -23,14 +23,8 @@ class DebugToolbar
 			$template->set('queries', $queries['data'])->set('query_count', $queries['count']);
 		}
 
-		// Logs panel
-		if (Kohana::config('debug_toolbar.panels.logs') === TRUE)
-		{
-			$template->set('logs', self::get_logs());
-		}
-
 		// Vars and Config panel
-		if (Kohana::config('debug_toolbar.panels.vars_and_config') === TRUE)
+		if (Kohana::config('debug_toolbar.panels.vars') === TRUE)
 		{
 			$template->set('configs', self::get_configs());
 		}

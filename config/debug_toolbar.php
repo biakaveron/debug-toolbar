@@ -30,7 +30,6 @@ $config['panels'] = array(
 	'benchmarks'		=> TRUE,
 	'database'			=> TRUE,
 	'vars'				=> TRUE,
-	'logs'				=> TRUE,
 	'ajax'				=> TRUE,
 	'files'				=> TRUE,
 	'modules'			=> TRUE,
