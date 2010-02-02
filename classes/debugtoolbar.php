@@ -23,12 +23,6 @@ class DebugToolbar
 			$template->set('queries', $queries['data'])->set('query_count', $queries['count']);
 		}
 
-		// Vars and Config panel
-		if (Kohana::config('debug_toolbar.panels.vars') === TRUE)
-		{
-			$template->set('configs', self::get_configs());
-		}
-
 		// Files panel
 		if (Kohana::config('debug_toolbar.panels.files') === TRUE)
 		{
@@ -207,7 +201,7 @@ class DebugToolbar
 	 * @TODO  change benchmark logic to KO3 style
 	 */
 	private static function firephp()
-	{return;
+	{//return;
 		$firephp = FirePHP::getInstance(TRUE);
 		$firephp->fb('KOHANA DEBUG TOOLBAR:');
 
@@ -238,7 +232,7 @@ class DebugToolbar
 
 			$firephp->fb(array($message, $table), FirePHP::TABLE);
 		}
-
+return;
 		// Database
 		$queries = self::get_queries();
 

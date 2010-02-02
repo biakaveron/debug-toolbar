@@ -59,7 +59,7 @@
 			<?php if (Kohana::config('debug_toolbar.panels.vars')): ?>
 				<li id="toggle-vars" onclick="debugToolbar.show('debug-vars'); return false;">
 					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/config.png', array('alt' => 'vars')) ?>
-					vars &amp; config
+					vars
 				</li>
 			<?php endif ?>
 			
@@ -193,10 +193,10 @@
 		</div>
 	<?php endif ?>
 	
-	<!-- Vars and Config -->
+	<!-- Vars -->
 	<?php if (Kohana::config('debug_toolbar.panels.vars')): ?>
 		<div id="debug-vars" class="top" style="display: none;">
-			<h1>Vars &amp; Config</h1>
+			<h1>Vars</h1>
 			<ul class="varmenu">
 				<li onclick="debugToolbar.showvar(this, 'vars-post'); return false;">POST</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-get'); return false;">GET</li>
