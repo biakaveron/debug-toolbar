@@ -87,15 +87,18 @@ div#kohana-debug-toolbar tr.odd td {
 	background-color: #ddd;
 }
 div#kohana-debug-toolbar th {
-  padding: 3px 5px;
-  vertical-align: top;
-  background-color: #999;
-  color: #eee;
-  white-space: nowrap;
+	padding: 3px 5px;
+	vertical-align: top;
+	background-color: #999;
+	color: #eee;
+	white-space: nowrap;
 }
 div#kohana-debug-toolbar td,
 div#kohana-debug-toolbar th {
 	border: 1px solid #efefef;
+}
+div#kohana-debug-toolbar tr.current {
+	font-weight: bold;
 }
 
 /* Toolbar */

@@ -87,6 +87,14 @@
 				</li>
 			<?php endif ?>
 
+			<!-- Routes -->
+			<?php if (Kohana::config('debug_toolbar.panels.routes')): ?>
+				<li id="toggle-routes" onclick="debugToolbar.show('debug-routes'); return false;">
+					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/route.png', array('alt' => 'routes')) ?>
+					routes
+				</li>
+			<?php endif ?>
+
 			<!-- Swap sides -->
 			<li onclick="debugToolbar.swap(); return false;">
 				<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/text_align_left.png', array('alt' => 'align')) ?>
@@ -268,6 +276,7 @@
 		</div>
 	<?php endif ?>
 
+	<!-- Module list -->
 	<?php if (Kohana::config('debug_toolbar.panels.modules')):
 			$mod_counter = 0; ?>
 		<div id="debug-modules" class="top" style="display: none;">
@@ -287,5 +296,28 @@
 					<td><?php echo realpath($path) ?></td>
 				</tr>
 				<?php endforeach ?>
+			</table>
 	<?php endif ?>
+		</div>
+
+	<!-- Routes -->
+	<?php if (Kohana::config('debug_toolbar.panels.routes')):
+			$r_counter = 0; ?>
+		<div id="debug-routes" class="top" style="display: none;">
+			<h1>Routes</h1>
+			<table cellspacing="0" cellpadding="0">
+				<tr align="left">
+					<th>#</th>
+					<th>name</th>
+				</tr>
+				<?php foreach($routes as $name => $route):
+						$class = ($route == Request::instance()->route ? ' current' : ''); ?>
+				<tr class="<?php echo text::alternate('odd','even').$class?>">
+					<td><?php echo ++$r_counter ?></td>
+					<td><?php echo $name ?></td>
+				</tr>
+				<?php endforeach ?>
+			</table>
+	<?php endif ?>
+		</div>
 </div>

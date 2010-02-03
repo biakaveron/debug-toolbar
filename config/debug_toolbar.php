@@ -33,6 +33,7 @@ $config['panels'] = array(
 	'ajax'				=> TRUE,
 	'files'				=> TRUE,
 	'modules'			=> TRUE,
+	'routes'			=> TRUE,
 );
 
 /*

@@ -2,6 +2,9 @@
 
 class DebugToolbar
 {
+	protected static $_queries = FALSE;
+	protected static $_benchmarks = FALSE;
+
 	public static $benchmark_name = 'debug_toolbar';
 
 	/**
@@ -37,6 +40,12 @@ class DebugToolbar
 		if (Kohana::config('debug_toolbar.panels.modules') === TRUE)
 		{
 			$template->set('modules', self::get_modules());
+		}
+
+		// Routes panel
+		if (Kohana::config('debug_toolbar.panels.routes') === TRUE)
+		{
+			$template->set('routes', self::get_routes());
 		}
 
 		// FirePHP
@@ -110,6 +119,11 @@ class DebugToolbar
 	 */
 	public static function get_queries()
 	{
+		if (self::$_queries !== FALSE)
+		{
+			return self::$_queries;
+		}
+
 		$result = array();
 		$count = $time = $memory = 0;
 
@@ -139,7 +153,9 @@ class DebugToolbar
 				$result[$name]['total'] = array($sub_count, $sub_time, $sub_memory);
 			}		
 		}
-		return array('count' => $count, 'time' => $time, 'memory' => $memory, 'data' => $result);
+		self::$_queries = array('count' => $count, 'time' => $time, 'memory' => $memory, 'data' => $result);
+
+		return self::$_queries;
 	}
 
 	/**
@@ -153,6 +169,12 @@ class DebugToolbar
 		{
 			return array();
 		}
+
+		if (self::$_benchmarks !== FALSE)
+		{
+			return self::$_benchmarks;
+		}
+
 		$groups = Profiler::groups();
 		$result = array();
 		foreach(array_keys($groups) as $group)
@@ -186,6 +208,8 @@ class DebugToolbar
 
 		);
 
+		self::$_benchmarks = $result;
+
 		return $result;
 	}
 
@@ -208,6 +232,11 @@ class DebugToolbar
 	public static function get_modules()
 	{
 		return Kohana::modules();
+	}
+
+	public static function get_routes()
+	{
+		return Route::all();
 	}
 
 	/**
