@@ -82,7 +82,7 @@
 			<!-- Modules -->
 			<?php if (Kohana::config('debug_toolbar.panels.modules')): ?>
 				<li id="toggle-modules" onclick="debugToolbar.show('debug-modules'); return false;">
-					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/page_copy.png', array('alt' => 'modules')) ?>
+					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/module.png', array('alt' => 'modules')) ?>
 					modules
 				</li>
 			<?php endif ?>
