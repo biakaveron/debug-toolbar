@@ -202,6 +202,7 @@
 			<ul class="varmenu">
 				<li onclick="debugToolbar.showvar(this, 'vars-post'); return false;">POST</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-get'); return false;">GET</li>
+				<li onclick="debugToolbar.showvar(this, 'vars-files'); return false;">FILES</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-server'); return false;">SERVER</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-cookie'); return false;">COOKIE</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-session'); return false;">SESSION</li>
@@ -211,6 +212,9 @@
 			</div>
 			<div style="display: none;" id="vars-get">
 				<?php echo isset($_GET) ? Kohana::debug($_GET) : Kohana::debug(array()) ?>
+			</div>
+			<div style="display: none;" id="vars-files">
+				<?php echo isset($_FILES) ? Kohana::debug($_FILES) : Kohana::debug(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-server">
 				<?php echo isset($_SERVER) ? Kohana::debug($_SERVER) : Kohana::debug(array()) ?>
