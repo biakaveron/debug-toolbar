@@ -34,6 +34,7 @@ $config['panels'] = array(
 	'files'				=> TRUE,
 	'modules'			=> TRUE,
 	'routes'			=> TRUE,
+	'customs'           => TRUE,
 );
 
 /*

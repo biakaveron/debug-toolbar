@@ -30,7 +30,7 @@
 			
 			<!-- Kohana version -->
 			<li>
-				<?php echo html::anchor("http://kohanaphp.com/home", Kohana::VERSION, array('target' => '_blank')) ?>
+				<?php echo html::anchor("http://kohanaframework.org", Kohana::VERSION, array('target' => '_blank')) ?>
 			</li>
 			
 			<!-- Benchmarks -->
@@ -92,6 +92,14 @@
 				<li id="toggle-routes" onclick="debugToolbar.show('debug-routes'); return false;">
 					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/route.png', array('alt' => 'routes')) ?>
 					routes
+				</li>
+			<?php endif ?>
+
+			<!-- Custom data -->
+			<?php if (Kohana::config('debug_toolbar.panels.customs')): ?>
+				<li id="toggle-customs" onclick="debugToolbar.show('debug-customs'); return false;">
+					<?php echo html::image(Kohana::config('debug_toolbar.icon_path').'/custom.png', array('alt' => 'customs')) ?>
+					customs
 				</li>
 			<?php endif ?>
 
@@ -322,6 +330,24 @@
 				</tr>
 				<?php endforeach ?>
 			</table>
+		</div>
+	<?php endif ?>
+
+	<!-- Custom data-->
+	<?php if (Kohana::config('debug_toolbar.panels.customs') && count($customs) > 0):
+			$r_counter = 0; ?>
+		<div id="debug-customs" class="top" style="display: none;">
+			<h1>Custom data</h1>
+			<ul class="sectionmenu">
+				<?php foreach($customs as $section => $data): ?>
+				<li onclick="debugToolbar.showvar(this, 'customs-<?php echo $section ?>'); return false;"><?php echo $section ?></li>
+				<?php endforeach; ?>
+			</ul>
+			<?php foreach($customs as $section => $data): ?>
+			<div style="display: none;" id="customs-<?php echo $section ?>">
+					<pre><?php echo $data ?></pre>
+			</div>
+			<?php endforeach; ?>
 		</div>
 	<?php endif ?>
 </div>

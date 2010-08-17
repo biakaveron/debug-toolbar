@@ -4,6 +4,7 @@ class DebugToolbar
 {
 	protected static $_queries = FALSE;
 	protected static $_benchmarks = FALSE;
+	protected static $_custom_tabs = array();
 
 	public static $benchmark_name = 'debug_toolbar';
 
@@ -46,6 +47,12 @@ class DebugToolbar
 		if (Kohana::config('debug_toolbar.panels.routes') === TRUE)
 		{
 			$template->set('routes', self::get_routes());
+		}
+
+		// Custom data
+		if (Kohana::config('debug_toolbar.panels.customs') === TRUE)
+		{
+			$template->set('customs', self::get_customs());
 		}
 
 		// FirePHP
@@ -115,7 +122,43 @@ class DebugToolbar
 	}
 
 	/**
+	 * Adds custom data to render in a separate tab
+	 *
+	 * @param  string $tab_name
+	 * @param  mixed  $data
+	 * @return void
+	 */
+	public static function add_custom($tab_name, $data)
+	{
+		self::$_custom_tabs[$tab_name] = $data;
+	}
+
+	/**
+	 * Get user vars
+	 *
+	 * @return array
+	 */
+	public static function get_customs()
+	{
+		$result = array();
+
+		foreach(self::$_custom_tabs as $tab => $data)
+		{			
+			if (is_array($data) OR is_object($data))
+			{
+				$data = Kohana::dump($data);
+			}
+
+			$result[$tab] = $data;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Retrieves query benchmarks from Database
+	 *
+	 * @return  array
 	 */
 	public static function get_queries()
 	{
@@ -226,6 +269,7 @@ class DebugToolbar
 	}
 
 	/**
+	 * Get module list
 	 *
 	 * @return array  module_name => module_path
 	 */
@@ -234,6 +278,11 @@ class DebugToolbar
 		return Kohana::modules();
 	}
 
+	/**
+	 * Returns all application routes
+	 *
+	 * @return array
+	 */
 	public static function get_routes()
 	{
 		return Route::all();
