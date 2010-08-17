@@ -301,8 +301,8 @@
 				</tr>
 				<?php endforeach ?>
 			</table>
-	<?php endif ?>
 		</div>
+	<?php endif ?>
 
 	<!-- Routes -->
 	<?php if (Kohana::config('debug_toolbar.panels.routes')):
@@ -322,6 +322,6 @@
 				</tr>
 				<?php endforeach ?>
 			</table>
-	<?php endif ?>
 		</div>
+	<?php endif ?>
 </div>
