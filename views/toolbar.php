@@ -216,22 +216,22 @@
 				<li onclick="debugToolbar.showvar(this, 'vars-session'); return false;">SESSION</li>
 			</ul>
 			<div style="display: none;" id="vars-post">
-				<?php echo isset($_POST) ? Kohana::debug($_POST) : Kohana::debug(array()) ?>
+				<?php echo isset($_POST) ? Debug::vars($_POST) : Debug::vars(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-get">
-				<?php echo isset($_GET) ? Kohana::debug($_GET) : Kohana::debug(array()) ?>
+				<?php echo isset($_GET) ? Debug::vars($_GET) : Debug::vars(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-files">
-				<?php echo isset($_FILES) ? Kohana::debug($_FILES) : Kohana::debug(array()) ?>
+				<?php echo isset($_FILES) ? Debug::vars($_FILES) : Debug::vars(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-server">
-				<?php echo isset($_SERVER) ? Kohana::debug($_SERVER) : Kohana::debug(array()) ?>
+				<?php echo isset($_SERVER) ? Debug::vars($_SERVER) : Debug::vars(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-cookie">
-				<?php echo isset($_COOKIE) ? Kohana::debug($_COOKIE) : Kohana::debug(array()) ?>
+				<?php echo isset($_COOKIE) ? Debug::vars($_COOKIE) : Debug::vars(array()) ?>
 			</div>
 			<div style="display: none;" id="vars-session">
-				<?php echo isset($_SESSION) ? Kohana::debug($_SESSION) : Kohana::debug(array()) ?>
+				<?php echo isset($_SESSION) ? Debug::vars($_SESSION) : Debug::vars(array()) ?>
 			</div>
 		</div>
 	<?php endif ?>
@@ -323,7 +323,7 @@
 					<th>name</th>
 				</tr>
 				<?php foreach($routes as $name => $route):
-						$class = ($route == Request::instance()->route ? ' current' : ''); ?>
+						$class = ($route == Request::initial()->route() ? ' current' : ''); ?>
 				<tr class="<?php echo text::alternate('odd','even').$class?>">
 					<td><?php echo ++$r_counter ?></td>
 					<td><?php echo $name ?></td>

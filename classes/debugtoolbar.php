@@ -87,7 +87,7 @@ class DebugToolbar
 			$template->set('benchmarks', self::get_benchmarks());
 		}
 
-		if ($output = Request::instance()->response and self::is_enabled())
+		if ($output = Request::initial()->response()->body() and self::is_enabled())
 		{
 			// Try to add css just before the </head> tag
 			if (stripos($output, '</head>') !== FALSE)
@@ -111,7 +111,7 @@ class DebugToolbar
 				$output .= $template->render();
 			}
 
-			Request::instance()->response = $output;
+			Request::initial()->response()->body($output);
 		}
 		else
 		{
@@ -146,7 +146,7 @@ class DebugToolbar
 		{			
 			if (is_array($data) OR is_object($data))
 			{
-				$data = Kohana::dump($data);
+				$data = Debug::dump($data);
 			}
 
 			$result[$tab] = $data;
@@ -385,7 +385,7 @@ class DebugToolbar
 	public static function is_enabled()
 	{
 		// Don't auto render toolbar for ajax requests
-		if (Request::$is_ajax)
+		if (Request::initial()->is_ajax())
 			return FALSE;
 
 		// Don't auto render toolbar if $_GET['debug'] = 'false'
@@ -401,9 +401,9 @@ class DebugToolbar
 		if ($secret_key !== FALSE and isset($_GET[$secret_key]))
 			return TRUE;
 
-		// Don't auto render when IN_PRODUCTION (this can obviously be
+		// Don't auto render when in PRODUCTION (this can obviously be
 		// overridden by the above secret key)
-		if (IN_PRODUCTION)
+		if (Kohana::$environment == Kohana::PRODUCTION)
 			return FALSE;
 
 		return TRUE;
