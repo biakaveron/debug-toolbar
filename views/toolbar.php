@@ -177,14 +177,14 @@
 				<tr align="left">
 					<th colspan="4">DATABASE "<?php echo strtoupper($db_profile) ?>"</th>
 				</tr>
-					<? foreach ($stats as $num => $query): ?>
+					<?php foreach ($stats as $num => $query): ?>
 					<tr class="<?php echo text::alternate('odd','even') ?>">
 						<td><?php echo $num+1 ?></td>
 						<td><?php echo $query['name'] ?></td>
 						<td><?php echo number_format($query['time'] * 1000, 3) ?> ms</td>
 						<td><?php echo number_format($query['memory'] / 1024, 3) ?> kb</td>
 					</tr>
-					<?	endforeach;	?>
+					<?php	endforeach;	?>
 					<tr>
 						<th>&nbsp;</th>
 						<th><?php echo $sub_count ?> total</th>
