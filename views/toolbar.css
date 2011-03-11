@@ -13,6 +13,8 @@ div#kohana-debug-toolbar table,
 div#kohana-debug-toolbar tr,
 div#kohana-debug-toolbar td,
 div#kohana-debug-toolbar th {
+	width: auto;
+	height: auto;
 	margin: 0;
 	padding: 0;
 	border: 0;
