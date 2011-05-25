@@ -1,0 +1,3 @@
+[submodule "vendor/firephp"]
+	path = vendor/firephp
+	url = git://github.com/cadorn/firephp-libs.git
