@@ -8,7 +8,7 @@
  * @author  Brotkin Ivan (BIakaVeron) <BIakaVeron@gmail.com>
  * @author  Sergei Gladkovskiy <smgladkovskiy@gmail.com>
  */
-class Kohana_DebugToolbar {
+abstract class Kohana_DebugToolbar {
 
 	/**
 	 * Queries container
