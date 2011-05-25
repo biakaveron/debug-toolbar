@@ -392,6 +392,16 @@ class Kohana_DebugToolbar {
 	public static function is_enabled()
 	{
 		$config = Kohana::config('debug_toolbar');
+
+		// Auto render if secret key isset
+		if ($config->secret_key !== FALSE and isset($_GET[$config->secret_key]))
+			return TRUE;
+
+		// Don't auto render when in PRODUCTION (this can obviously be
+		// overridden by the above secret key)
+		if (Kohana::$environment == Kohana::PRODUCTION)
+			return FALSE;
+
 		// Don't auto render toolbar for ajax requests
 		if (Request::initial()->is_ajax())
 			return FALSE;
@@ -402,15 +412,6 @@ class Kohana_DebugToolbar {
 
 		// Don't auto render if auto_render config is FALSE
 		if ($config->auto_render !== TRUE)
-			return FALSE;
-
-		// Auto render if secret key isset
-		if ($config->secret_key !== FALSE and isset($_GET[$config->secret_key]))
-			return TRUE;
-
-		// Don't auto render when in PRODUCTION (this can obviously be
-		// overridden by the above secret key)
-		if (Kohana::$environment == Kohana::PRODUCTION)
 			return FALSE;
 
 		return TRUE;
