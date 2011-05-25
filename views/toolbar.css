@@ -7,7 +7,7 @@ div#kohana-debug-toolbar pre,
 div#kohana-debug-toolbar h1,
 div#kohana-debug-toolbar img,
 div#kohana-debug-toolbar a,
-div#kohana-debug-toolbar ul, 
+div#kohana-debug-toolbar ul,
 div#kohana-debug-toolbar li,
 div#kohana-debug-toolbar table,
 div#kohana-debug-toolbar tr,
@@ -52,7 +52,7 @@ div#kohana-debug-toolbar h1 {
 	color: #000;
 	display:block;
 }
-div#kohana-debug-toolbar a, 
+div#kohana-debug-toolbar a,
 div#kohana-debug-toolbar a:hover {
   text-decoration: none;
   color: #222;
@@ -129,7 +129,7 @@ div#kohana-debug-toolbar div#debug-toolbar ul.menu li {
 	cursor: pointer;
 	line-height: 16px;
 }
-div#kohana-debug-toolbar div#debug-toolbar ul.menu li.last { 
+div#kohana-debug-toolbar div#debug-toolbar ul.menu li.last {
 	border: none;
 }
 
@@ -141,15 +141,15 @@ div#kohana-debug-toolbar div#debug-database { padding: 3px 0px; }
 
 /* Vars & Config */
 div#kohana-debug-toolbar div#debug-vars {
-	padding: 3px 0px; 
+	padding: 3px 0px;
 }
 div#kohana-debug-toolbar div#debug-vars pre {
 	background-color: #ddd;
 	padding: 5px;
 	color: #333;
 }
-div#kohana-debug-toolbar div#debug-vars .varmenu { 
-  margin: 20px 0 0 0; 
+div#kohana-debug-toolbar div#debug-vars .varmenu {
+  margin: 20px 0 0 0;
 	height: 23px;
 }
 div#kohana-debug-toolbar div#debug-vars .varmenu li {
@@ -220,5 +220,4 @@ div#kohana-debug-toolbar div#debug-customs .sectionmenu li.active {
 	background-color: #ddd;
 	color: #000;
 }
-
 </style>
