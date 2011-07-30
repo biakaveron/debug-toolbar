@@ -53,7 +53,7 @@ abstract class Kohana_DebugToolbar {
 
 		$template = new View('toolbar');
 
-		$config = Kohana::config('debug_toolbar');
+		$config = Kohana::$config->load('debug_toolbar');
 
 		// Database panel
 		if ($config->panels['database'] === TRUE)
@@ -391,7 +391,7 @@ abstract class Kohana_DebugToolbar {
 	 */
 	public static function is_enabled()
 	{
-		$config = Kohana::config('debug_toolbar');
+		$config = Kohana::$config->load('debug_toolbar');
 
 		// Auto render if secret key isset
 		if ($config->secret_key !== FALSE and isset($_GET[$config->secret_key]))
