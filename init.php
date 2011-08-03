@@ -1,8 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // Load FirePHP if it enabled in config
-if(Kohana::$config->load('debug_toolbar.firephp_enabled') === TRUE)
-	require_once Kohana::find_file('vendor', 'firephp/packages/core/lib/FirePHPCore/FirePHP.class');
-
+if(Kohana::$config->load('debug_toolbar.firephp_enabled') === TRUE){
+	$file = 'firephp/packages/core/lib/FirePHPCore/FirePHP.class';
+	$firePHP = Kohana::find_file('vendor', $file);
+	if( ! $firePHP) throw new Kohana_Exception('The FirePHP :file could not be found', array(':file'=>$file));
+	require_once $firePHP;
+}
 // Render Debug Toolbar on the end of application execution
 register_shutdown_function('debugtoolbar::render');
