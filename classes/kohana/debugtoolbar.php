@@ -409,13 +409,9 @@ abstract class Kohana_DebugToolbar {
 		// Don't auto render toolbar for cli requests
 		if (Kohana::$is_cli)
 			return FALSE;
-		
+
 		// Don't auto render toolbar if $_GET['debug'] = 'false'
 		if (isset($_GET['debug']) and strtolower($_GET['debug']) == 'false')
-			return FALSE;
-
-		// Don't auto render if auto_render config is FALSE
-		if ($config->auto_render !== TRUE)
 			return FALSE;
 
 		return TRUE;
