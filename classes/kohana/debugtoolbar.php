@@ -42,9 +42,10 @@ abstract class Kohana_DebugToolbar {
 	 * Renders the Debug Toolbar
 	 *
 	 * @static
+	 * @param bool Will toolbar be printed directly or returned as string [Optional]
 	 * @return bool|string
 	 */
-	public static function render()
+	public static function render($auto_print = TRUE)
 	{
 		if( ! self::is_enabled())
 			return FALSE;
@@ -124,7 +125,10 @@ abstract class Kohana_DebugToolbar {
 
 		$template->set('styles', $styles);
 
-		echo $template->render();
+		if ($auto_print === TRUE)
+		    echo $template->render();
+		else
+		    return $template->render();
 	}
 
 	/**
