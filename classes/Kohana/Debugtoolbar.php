@@ -5,7 +5,7 @@
  *
  * @package Debug Toolbar
  * @author  Aaron Forsander <http://grimhappy.com/>
- * @author  Brotkin Ivan (BIakaVeron) <BIakaVeron@gmail.com>
+ * @author  Ivan Brotkin (BIakaVeron) <BIakaVeron@gmail.com>
  * @author  Sergei Gladkovskiy <smgladkovskiy@gmail.com>
  */
 abstract class Kohana_DebugToolbar {
@@ -46,14 +46,16 @@ abstract class Kohana_DebugToolbar {
 	 */
 	public static function render()
 	{
-		if( ! self::is_enabled())
+		if ( ! self::is_enabled())
+		{
 			return FALSE;
+		}
 
-		$token = Profiler::start('custom', self::$benchmark_name);
+		$token    = Profiler::start('custom', self::$benchmark_name);
 
 		$template = new View('toolbar');
 
-		$config = Kohana::$config->load('debug_toolbar');
+		$config   = Kohana::$config->load('debug_toolbar');
 
 		// Database panel
 		if ($config->panels['database'] === TRUE)
@@ -132,6 +134,7 @@ abstract class Kohana_DebugToolbar {
 	 *
 	 * @param  string $tab_name
 	 * @param  mixed  $data
+	 *
 	 * @return void
 	 */
 	public static function add_custom($tab_name, $data)
@@ -148,7 +151,7 @@ abstract class Kohana_DebugToolbar {
 	{
 		$result = array();
 
-		foreach(self::$_custom_tabs as $tab => $data)
+		foreach (self::$_custom_tabs as $tab => $data)
 		{
 			if (is_array($data) OR is_object($data))
 			{
@@ -174,13 +177,13 @@ abstract class Kohana_DebugToolbar {
 		}
 
 		$result = array();
-		$count = $time = $memory = 0;
+		$count  = $time = $memory = 0;
 
 		$groups = Profiler::groups();
-		foreach(Database::$instances as $name => $db)
+		foreach (Database::$instances as $name => $db)
 		{
-			$group_name = 'database (' . strtolower($name) . ')';
-			$group = arr::get($groups, $group_name, FALSE);
+			$group_name = 'database ('.strtolower($name).')';
+			$group      = arr::get($groups, $group_name, FALSE);
 
 			if ($group)
 			{
@@ -190,19 +193,29 @@ abstract class Kohana_DebugToolbar {
 					$sub_count += count($tokens);
 					foreach ($tokens as $token)
 					{
-						$total = Profiler::total($token);
-						$sub_time += $total[0];
-						$sub_memory += $total[1];
-						$result[$name][] = array('name' => $query, 'time' => $total[0], 'memory' => $total[1]);
+						$total           = Profiler::total($token);
+						$sub_time       += $total[0];
+						$sub_memory     += $total[1];
+						$result[$name][] = array(
+							'name'   => $query,
+							'time'   => $total[0],
+							'memory' => $total[1]
+						);
 					}
 				}
-				$count += $sub_count;
-				$time += $sub_time;
+				$count  += $sub_count;
+				$time   += $sub_time;
 				$memory += $sub_memory;
+
 				$result[$name]['total'] = array($sub_count, $sub_time, $sub_memory);
 			}
 		}
-		self::$_queries = array('count' => $count, 'time' => $time, 'memory' => $memory, 'data' => $result);
+		self::$_queries = array(
+			'count'  => $count,
+			'time'   => $time,
+			'memory' => $memory,
+			'data'   => $result
+		);
 
 		return self::$_queries;
 	}
@@ -226,34 +239,34 @@ abstract class Kohana_DebugToolbar {
 
 		$groups = Profiler::groups();
 		$result = array();
-		foreach(array_keys($groups) as $group)
+		foreach (array_keys($groups) as $group)
 		{
 			if (strpos($group, 'database (') === FALSE)
 			{
-				foreach($groups[$group] as $name => $marks)
+				foreach ($groups[$group] as $name => $marks)
 				{
-					$stats = Profiler::stats($marks);
+					$stats            = Profiler::stats($marks);
 					$result[$group][] = array
 					(
-						'name'			=> $name,
-						'count'			=> count($marks),
-						'total_time'	=> $stats['total']['time'],
-						'avg_time'		=> $stats['average']['time'],
-						'total_memory'	=> $stats['total']['memory'],
-						'avg_memory'	=> $stats['average']['memory'],
+						'name'         => $name,
+						'count'        => count($marks),
+						'total_time'   => $stats['total']['time'],
+						'avg_time'     => $stats['average']['time'],
+						'total_memory' => $stats['total']['memory'],
+						'avg_memory'   => $stats['average']['memory'],
 					);
 				}
 			}
 		}
 		// add total stats
-		$total = Profiler::application();
+		$total                 = Profiler::application();
 		$result['application'] = array
 		(
-			'count'			=> 1,
-			'total_time'	=> $total['current']['time'],
-			'avg_time'		=> $total['average']['time'],
-			'total_memory'	=> $total['current']['memory'],
-			'avg_memory'	=> $total['average']['memory'],
+			'count'        => 1,
+			'total_time'   => $total['current']['time'],
+			'avg_time'     => $total['average']['time'],
+			'total_memory' => $total['current']['memory'],
+			'avg_memory'   => $total['average']['memory'],
 
 		);
 
@@ -313,10 +326,10 @@ abstract class Kohana_DebugToolbar {
 
 		foreach ($globals as $name => $global)
 		{
-			$table = array();
-			$table[] = array($name,'Value');
+			$table   = array();
+			$table[] = array($name, 'Value');
 
-			foreach((array)$global as $key => $value)
+			foreach ((array)$global as $key => $value)
 			{
 				if (is_object($value))
 				{
@@ -334,19 +347,24 @@ abstract class Kohana_DebugToolbar {
 		// Database
 		$query_stats = self::get_queries();
 
-		//$total_time = $total_rows = 0;
-		$table = array();
-		$table[] = array('DB profile', 'SQL Statement','Time','Memory');
+		$table   = array();
+		$table[] = array(
+			'DB profile',
+			'SQL Statement',
+			'Time',
+			'Memory'
+		);
 
 		foreach ((array)$query_stats['data'] as $db => $queries)
-		{unset($queries['total']);
+		{
+			unset($queries['total']);
 			foreach ($queries as $query)
 			{
 				$table[] = array(
 					$db,
-					str_replace("\n",' ',$query['name']),
-					number_format($query['time']*1000, 3),
-					number_format($query['memory']/1024, 3),
+					str_replace("\n", ' ', $query['name']),
+					number_format($query['time'] * 1000, 3),
+					number_format($query['memory'] / 1024, 3),
 				);
 			}
 		}
@@ -359,10 +377,16 @@ abstract class Kohana_DebugToolbar {
 		// Benchmarks
 		$groups = self::get_benchmarks();
 		// application benchmarks
-		$total = array_pop($groups);
+		$total  = array_pop($groups);
 
-		$table = array();
-		$table[] = array('Group', 'Benchmark', 'Count', 'Time', 'Memory');
+		$table   = array();
+		$table[] = array(
+			'Group',
+			'Benchmark',
+			'Count',
+			'Time',
+			'Memory'
+		);
 
 		foreach ((array)$groups as $group => $benchmarks)
 		{
@@ -371,7 +395,7 @@ abstract class Kohana_DebugToolbar {
 				$table[] = array(
 					ucfirst($group),
 					ucwords($benchmark['name']),
-					number_format($benchmark['total_time'], 3). ' s',
+					number_format($benchmark['total_time'], 3).' s',
 					text::bytes($benchmark['total_memory']),
 				);
 			}
@@ -394,25 +418,35 @@ abstract class Kohana_DebugToolbar {
 		$config = Kohana::$config->load('debug_toolbar');
 
 		// Auto render if secret key isset
-		if ($config->secret_key !== FALSE and isset($_GET[$config->secret_key]))
+		if ($config->secret_key !== FALSE AND isset($_GET[$config->secret_key]))
+		{
 			return TRUE;
+		}
 
 		// Don't auto render when in PRODUCTION (this can obviously be
 		// overridden by the above secret key)
 		if (Kohana::$environment == Kohana::PRODUCTION)
+		{
 			return FALSE;
+		}
 
 		// Don't auto render toolbar for ajax requests
 		if (Request::initial()->is_ajax())
+		{
 			return FALSE;
+		}
 
 		// Don't auto render toolbar for cli requests
 		if (Kohana::$is_cli)
+		{
 			return FALSE;
+		}
 
 		// Don't auto render toolbar if $_GET['debug'] = 'false'
-		if (isset($_GET['debug']) and strtolower($_GET['debug']) == 'false')
+		if (isset($_GET['debug']) AND strtolower($_GET['debug']) == 'false')
+		{
 			return FALSE;
+		}
 
 		return TRUE;
 	}
