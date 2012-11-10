@@ -437,7 +437,7 @@ abstract class Kohana_DebugToolbar {
 		}
 
 		// Don't auto render toolbar for cli requests
-		if (Kohana::$is_cli)
+		if (PHP_SAPI == 'cli')
 		{
 			return FALSE;
 		}
