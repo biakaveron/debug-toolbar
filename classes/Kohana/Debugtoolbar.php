@@ -8,7 +8,7 @@
  * @author  Ivan Brotkin (BIakaVeron) <BIakaVeron@gmail.com>
  * @author  Sergei Gladkovskiy <smgladkovskiy@gmail.com>
  */
-abstract class Kohana_DebugToolbar {
+abstract class Kohana_Debugtoolbar {
 
 	/**
 	 * Queries container
@@ -153,7 +153,7 @@ abstract class Kohana_DebugToolbar {
 
 		foreach (self::$_custom_tabs as $tab => $data)
 		{
-			if (is_array($data) OR is_object($data))
+			if (is_array($data) OR is_object($data) OR is_bool($data))
 			{
 				$data = Debug::dump($data);
 			}
@@ -396,7 +396,7 @@ abstract class Kohana_DebugToolbar {
 					ucfirst($group),
 					ucwords($benchmark['name']),
 					number_format($benchmark['total_time'], 3).' s',
-					text::bytes($benchmark['total_memory']),
+					Text::bytes($benchmark['total_memory']),
 				);
 			}
 		}
