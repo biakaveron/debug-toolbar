@@ -403,7 +403,7 @@ abstract class Kohana_DebugToolbar {
 			return FALSE;
 
 		// Don't auto render toolbar for ajax requests
-		if (Request::initial()->is_ajax())
+		if (Request::initial() === NULL OR Request::initial()->is_ajax())
 			return FALSE;
 
 		// Don't auto render toolbar for cli requests
