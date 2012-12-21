@@ -40,7 +40,7 @@
 				<!-- Memory -->
 				<li id="memory" onclick="debugToolbar.show('debug-benchmarks'); return false;">
 					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGvSURBVDjLpZO7alZREEbXiSdqJJDKYJNCkPBXYq12prHwBezSCpaidnY+graCYO0DpLRTQcR3EFLl8p+9525xgkRIJJApB2bN+gZmqCouU+NZzVef9isyUYeIRD0RTz482xouBBBNHi5u4JlkgUfx+evhxQ2aJRrJ/oFjUWysXeG45cUBy+aoJ90Sj0LGFY6anw2o1y/mK2ZS5pQ50+2XiBbdCvPk+mpw2OM/Bo92IJMhgiGCox+JeNEksIC11eLwvAhlzuAO37+BG9y9x3FTuiWTzhH61QFvdg5AdAZIB3Mw50AKsaRJYlGsX0tymTzf2y1TR9WwbogYY3ZhxR26gBmocrxMuhZNE435FtmSx1tP8QgiHEvj45d3jNlONouAKrjjzWaDv4CkmmNu/Pz9CzVh++Yd2rIz5tTnwdZmAzNymXT9F5AtMFeaTogJYkJfdsaaGpyO4E62pJ0yUCtKQFxo0hAT1JU2CWNOJ5vvP4AIcKeao17c2ljFE8SKEkVdWWxu42GYK9KE4c3O20pzSpyyoCx4v/6ECkCTCqccKorNxR5uSXgQnmQkw2Xf+Q+0iqQ9Ap64TwAAAABJRU5ErkJggg==" alt="memory">
-					<?php echo text::bytes($benchmarks['application']['total_memory']) ?>
+					<?php echo Text::bytes($benchmarks['application']['total_memory']) ?>
 				</li>
 			<?php endif ?>
 
@@ -132,13 +132,13 @@
 							<th colspan="6"><?php echo $group?></th>
 						</tr>
 						<?php foreach($marks as $benchmark): ?>
-						<tr class="<?php echo text::alternate('odd','even')?>">
+						<tr class="<?php echo Text::alternate('odd','even')?>">
 							<td align="left"><?php echo $benchmark['name'] ?></td>
 							<td align="right"><?php echo $benchmark['count'] ?></td>
 							<td align="right"><?php echo sprintf('%.2f', $benchmark['avg_time'] * 1000) ?> ms</td>
 							<td align="right"><?php echo sprintf('%.2f', $benchmark['total_time'] * 1000) ?> ms</td>
-							<td align="right"><?php echo text::bytes($benchmark['avg_memory']) ?></td>
-							<td align="right"><?php echo text::bytes($benchmark['total_memory']) ?></td>
+							<td align="right"><?php echo Text::bytes($benchmark['avg_memory']) ?></td>
+							<td align="right"><?php echo Text::bytes($benchmark['total_memory']) ?></td>
 						</tr>
 						<?php endforeach; ?>
 					<?php endforeach; ?>
@@ -146,11 +146,11 @@
 							<th colspan="2" align="left">APPLICATION</th>
 							<th align="right"><?php echo sprintf('%.2f', $application['avg_time'] * 1000) ?> ms</th>
 							<th align="right"><?php echo sprintf('%.2f', $application['total_time'] * 1000) ?> ms</th>
-							<th align="right"><?php echo text::bytes($application['avg_memory']) ?></th>
-							<th align="right"><?php echo text::bytes($application['total_memory']) ?></th>
+							<th align="right"><?php echo Text::bytes($application['avg_memory']) ?></th>
+							<th align="right"><?php echo Text::bytes($application['total_memory']) ?></th>
 						</tr>
 				<?php else: ?>
-					<tr class="<?php echo text::alternate('odd','even') ?>">
+					<tr class="<?php echo Text::alternate('odd','even') ?>">
 						<td colspan="6">no benchmarks to display</td>
 					</tr>
 				<?php endif ?>
@@ -175,7 +175,7 @@
 					<th colspan="4">DATABASE "<?php echo strtoupper($db_profile) ?>"</th>
 				</tr>
 					<?php foreach ($stats as $num => $query): ?>
-					<tr class="<?php echo text::alternate('odd','even') ?>">
+					<tr class="<?php echo Text::alternate('odd','even') ?>">
 						<td><?php echo $num+1 ?></td>
 						<td><?php echo $query['name'] ?></td>
 						<td><?php echo number_format($query['time'] * 1000, 3) ?> ms</td>
@@ -265,7 +265,7 @@
 					$size = filesize($file);
 					$lines = count(file($file));
 					?>
-					<tr class="<?php echo text::alternate('odd','even')?>">
+					<tr class="<?php echo Text::alternate('odd','even')?>">
 						<td><?php echo $id + 1 ?></td>
 						<td><?php echo $file ?></td>
 						<td><?php echo $size ?></td>
@@ -278,7 +278,7 @@
 				<?php endforeach; ?>
 				<tr align="left">
 					<th colspan="2">total</th>
-					<th><?php echo text::bytes($total_size) ?></th>
+					<th><?php echo Text::bytes($total_size) ?></th>
 					<th><?php echo number_format($total_lines) ?></th>
 				</tr>
 			</table>
@@ -298,7 +298,7 @@
 					<th>abs path</th>
 				</tr>
 				<?php foreach($modules as $name => $path): ?>
-				<tr class="<?php echo text::alternate('odd','even')?>">
+				<tr class="<?php echo Text::alternate('odd','even')?>">
 					<td><?php echo ++$mod_counter ?></td>
 					<td><?php echo $name ?></td>
 					<td><?php echo $path ?></td>
@@ -321,7 +321,7 @@
 				</tr>
 				<?php foreach($routes as $name => $route):
 						$class = ($route == Request::initial()->route() ? ' current' : ''); ?>
-				<tr class="<?php echo text::alternate('odd','even').$class?>">
+				<tr class="<?php echo Text::alternate('odd','even').$class?>">
 					<td><?php echo ++$r_counter ?></td>
 					<td><?php echo $name ?></td>
 				</tr>
