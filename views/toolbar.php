@@ -27,7 +27,7 @@
 
 			<!-- Kohana version -->
 			<li>
-				<?php echo html::anchor("http://kohanaframework.org", Kohana::VERSION, array('target' => '_blank')) ?>
+				<?php echo HTML::anchor("http://kohanaframework.org", Kohana::VERSION, array('target' => '_blank')) ?>
 			</li>
 
 			<!-- Benchmarks -->
