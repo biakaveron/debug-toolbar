@@ -126,7 +126,7 @@ abstract class Kohana_Debugtoolbar {
 
 		$template->set('styles', $styles);
 
-		echo $template->render();
+		return $template->render();
 	}
 
 	/**
