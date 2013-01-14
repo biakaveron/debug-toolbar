@@ -318,12 +318,25 @@
 				<tr align="left">
 					<th>#</th>
 					<th>name</th>
+					<th>controller</th>
+					<th>action</th>
+					<th>params</th>
 				</tr>
 				<?php foreach($routes as $name => $route):
-						$class = ($route == Request::initial()->route() ? ' current' : ''); ?>
+					$current = $route == Request::initial()->route();
+					$class = ($current ? ' current' : ''); ?>
 				<tr class="<?php echo Text::alternate('odd','even').$class?>">
 					<td><?php echo ++$r_counter ?></td>
 					<td><?php echo $name ?></td>
+					<td><?php echo ($current ? Request::$current->controller() : '') ?></td>
+					<td><?php echo ($current ? Request::$current->action() : '') ?></td>
+					<td class="params">
+						<?php if($current): ?>
+							<?php foreach (Request::$current->param() as $k => $v): ?>
+								(<?php echo $k ?>: <span><?php echo $v ?></span>)
+							<?php endforeach ?>
+						<?php endif ?>
+					</td>
 				</tr>
 				<?php endforeach ?>
 			</table>
