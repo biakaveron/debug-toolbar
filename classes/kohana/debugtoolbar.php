@@ -403,15 +403,15 @@ abstract class Kohana_DebugToolbar {
 			return FALSE;
 
 		// Don't auto render toolbar for ajax requests
-		if (Request::initial()->is_ajax())
+		if (Request::initial() AND Request::initial()->is_ajax())
+			return FALSE;
+
+		// Don't auto render toolbar for cli requests
+		if (Kohana::$is_cli)
 			return FALSE;
 
 		// Don't auto render toolbar if $_GET['debug'] = 'false'
 		if (isset($_GET['debug']) and strtolower($_GET['debug']) == 'false')
-			return FALSE;
-
-		// Don't auto render if auto_render config is FALSE
-		if ($config->auto_render !== TRUE)
 			return FALSE;
 
 		return TRUE;
