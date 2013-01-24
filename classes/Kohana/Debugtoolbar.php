@@ -32,6 +32,13 @@ abstract class Kohana_Debugtoolbar {
 	protected static $_custom_tabs = array();
 
 	/**
+	 * Can we render toolbar?
+	 *
+	 * @var bool
+	 */
+	protected static $_enabled = TRUE;
+
+	/**
 	 * Benchmark name
 	 *
 	 * @var string
@@ -407,6 +414,24 @@ abstract class Kohana_Debugtoolbar {
 	}
 
 	/**
+	 * Disable toolbar
+	 * @static
+	 */
+	public static function disable()
+	{
+		self::$_enabled = FALSE;
+	}
+
+	/**
+	 * Enable toolbar
+	 * @static
+	 */
+	public static function enable()
+	{
+		self::$_enabled = TRUE;
+	}
+
+	/**
 	 * Determines if all the conditions are correct to display the toolbar
 	 * (pretty kludgy, I know)
 	 *
@@ -415,6 +440,11 @@ abstract class Kohana_Debugtoolbar {
 	 */
 	public static function is_enabled()
 	{
+		// disabled with Debugtoolbar::disable() call
+		if (self::$_enabled === FALSE) {
+			return FALSE;
+		}
+
 		$config = Kohana::$config->load('debug_toolbar');
 
 		// Auto render if secret key isset
