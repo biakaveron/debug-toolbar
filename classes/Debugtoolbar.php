@@ -8,4 +8,4 @@
  * @author  Brotkin Ivan (BIakaVeron) <BIakaVeron@gmail.com>
  * @author  Sergei Gladkovskiy <smgladkovskiy@gmail.com>
  */
-abstract class DebugToolbar extends Kohana_Debugtoolbar {}
+abstract class Debugtoolbar extends Kohana_Debugtoolbar {}
