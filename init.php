@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // Load FirePHP if it enabled in config
-if (Kohana::$config->load('debug_toolbar.firephp_enabled') === TRUE)
+if (Kohana::$config->load('debug_toolbar.firephp_enabled') === TRUE && ! class_exists('FirePHP'))
 {
 	$file    = 'firephp/packages/core/lib/FirePHPCore/FirePHP.class';
 	$firePHP = Kohana::find_file('vendor', $file);
