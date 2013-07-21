@@ -48,10 +48,12 @@ abstract class Kohana_Debugtoolbar {
 	/**
 	 * Renders the Debug Toolbar
 	 *
+	 * @param  bool  $print  return DT's template (FALSE) or render it (TRUE, by default)
+	 *
 	 * @static
 	 * @return bool|string
 	 */
-	public static function render()
+	public static function render($print = FALSE)
 	{
 		if ( ! self::is_enabled())
 		{
@@ -133,7 +135,15 @@ abstract class Kohana_Debugtoolbar {
 
 		$template->set('styles', $styles);
 
-		echo $template->render();
+		$result = $template->render();
+
+		if ($print === TRUE)
+		{
+			echo $result;
+		}
+		else {
+			return $result;
+		}
 	}
 
 	/**
