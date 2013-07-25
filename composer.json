@@ -1,0 +1,15 @@
+{
+	"name": "modulargaming/debug-toolbar",
+	"type": "kohanag-module",
+	"description": "Debug Toolbar module for Kohana",
+	"keywords": [
+		"kohana", "debug-toolbar"
+	],
+	"homepage": "https://github.com/modulargaming/debug-toolbar",
+
+	"require": {
+		"php": ">=5.3.2",
+		"composer/installers": "*",
+		"firephp/firephp-core": "v0.4.0"
+	}
+}
