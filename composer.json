@@ -1,6 +1,6 @@
 {
 	"name": "modulargaming/debug-toolbar",
-	"type": "kohanag-module",
+	"type": "kohana-module",
 	"description": "Debug Toolbar module for Kohana",
 	"keywords": [
 		"kohana", "debug-toolbar"
