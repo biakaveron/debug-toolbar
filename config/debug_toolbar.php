@@ -42,4 +42,11 @@ $config['align'] = 'right';
  */
 $config['secret_key'] = FALSE;
 
+/**
+ * Disabled routes
+ */
+$config['excluded_routes'] = array(
+	'docs/media'  // Userguide media route
+);
+
 return $config;
