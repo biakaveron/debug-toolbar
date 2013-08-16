@@ -31,6 +31,8 @@ abstract class Kohana_Debugtoolbar {
 	 */
 	protected static $_custom_tabs = array();
 
+    protected static $_custom_sections = array();
+
 	/**
 	 * Can we render toolbar?
 	 *
@@ -99,6 +101,7 @@ abstract class Kohana_Debugtoolbar {
 		if ($config->panels['customs'] === TRUE)
 		{
 			$template->set('customs', self::get_customs());
+            $template->set('sections', self::get_custom_sections());
 		}
 
 		// FirePHP
@@ -160,6 +163,18 @@ abstract class Kohana_Debugtoolbar {
 	}
 
 	/**
+	 * Register additional sections. Supports callbacks for title or content params
+	 *
+	 * @param  mixed   $title  section title (string or callback)
+	 * @param  mixed   $data   section content (string or callback)
+	 * @param  string  $logo  @TODO not used
+	 */
+	public static function add_section($title, $data, $logo = NULL)
+	{
+		self::$_custom_sections[] = array($title, $data, $logo);
+	}
+
+	/**
 	 * Get user vars
 	 *
 	 * @return array
@@ -176,6 +191,27 @@ abstract class Kohana_Debugtoolbar {
 			}
 
 			$result[$tab] = $data;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Get custom sections
+	 *
+	 * @return array
+	 */
+	public static function get_custom_sections()
+	{
+		$result = array();
+		foreach(self::$_custom_sections as $section)
+		{
+			list($title, $data, $logo) = $section;
+			$result[] = array(
+				'title'    => is_callable($title) ? call_user_func($title) : (string)$title,
+				'content'  => is_callable($data) ? call_user_func($data) : $data,
+				'logo'     => $logo
+			);
 		}
 
 		return $result;
