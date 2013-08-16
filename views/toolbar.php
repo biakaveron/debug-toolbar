@@ -318,12 +318,34 @@
 				<tr align="left">
 					<th>#</th>
 					<th>name</th>
+					<th>directory</th>
+					<th>controller</th>
+					<th>action</th>
+					<th>params</th>
 				</tr>
 				<?php foreach($routes as $name => $route):
-						$class = ($route == Request::initial()->route() ? ' current' : ''); ?>
+						// Toolbar may render on shutdown, so Request::current() is empty
+						$request = Request::current() ? Request::current() : Request::initial();
+						$current = $route == $request->route();
+						$class = ($current ? ' current' : ''); ?>
 				<tr class="<?php echo Text::alternate('odd','even').$class?>">
 					<td><?php echo ++$r_counter ?></td>
 					<td><?php echo $name ?></td>
+				<?php if ($current) : ?>
+					<td><?php echo $request->directory() ?></td>
+					<td><?php echo $request->controller() ?></td>
+					<td><?php echo $request->action() ?></td>
+					<td class="params">
+						<ul>
+							<?php foreach ($request->param() as $k => $v): ?>
+								<li><?php echo $k ?>: <span><?php echo $v ?></li>
+							<?php endforeach ?>
+						</ul>
+
+					</td>
+					<?php else : ?>
+					<td colspan="4">&nbsp</td>
+				<?php endif ?>
 				</tr>
 				<?php endforeach ?>
 			</table>
