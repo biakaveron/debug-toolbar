@@ -48,7 +48,7 @@ abstract class Kohana_Debugtoolbar {
 	/**
 	 * Renders the Debug Toolbar
 	 *
-	 * @param  bool  $print  return DT's template (FALSE) or render it (TRUE, by default)
+	 * @param  bool  $print  return DT's template (FALSE, by default) or render it (TRUE)
 	 *
 	 * @static
 	 * @return bool|string
