@@ -217,6 +217,9 @@
 				<li onclick="debugToolbar.showvar(this, 'vars-server'); return false;">SERVER</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-cookie'); return false;">COOKIE</li>
 				<li onclick="debugToolbar.showvar(this, 'vars-session'); return false;">SESSION</li>
+				<?php if (Kohana::$config->load('debug_toolbar.panels.configs')): ?>
+				<li onclick="debugToolbar.showvar(this, 'vars-config'); return false;">CONFIG</li>
+				<?php endif ?>
 			</ul>
 			<div style="display: none;" id="vars-post">
 				<?php echo isset($_POST) ? Debug::vars($_POST) : Debug::vars(array()) ?>
@@ -236,6 +239,20 @@
 			<div style="display: none;" id="vars-session">
 				<?php echo isset($_SESSION) ? Debug::vars($_SESSION) : Debug::vars(array()) ?>
 			</div>
+			<?php if (Kohana::$config->load('debug_toolbar.panels.configs')): ?>
+			<div style="display: none;" id="vars-config">
+				<ul class="configmenu">
+					<?php foreach($configs as $name => $config) { ?>
+					<li onclick="debugToolbar.toggle('vars-config-<?php echo $name ?>'); return false;" class="<?php echo Text::alternate('odd','even') ?>">
+						<div><?php echo $name ?></div>
+						<div style="display: none" id="vars-config-<?php echo $name ?>">
+							<pre><?php echo Debug::dump($config) ?></pre>
+						</div>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+			<?php endif ?>
 		</div>
 	<?php endif ?>
 

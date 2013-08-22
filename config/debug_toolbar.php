@@ -24,6 +24,7 @@ $config['panels'] = array(
 	'benchmarks'		=> TRUE,
 	'database'			=> TRUE,
 	'vars'				=> TRUE,
+	'configs'			=> TRUE, // also depends on 'vars' values
 	'ajax'				=> TRUE,
 	'files'				=> TRUE,
 	'modules'			=> TRUE,
@@ -41,6 +42,11 @@ $config['align'] = 'right';
  * Secret Key
  */
 $config['secret_key'] = FALSE;
+
+/**
+ * Exclude configs
+ */
+$config['skip_configs'] = array('database', 'encrypt');
 
 /**
  * Disabled routes

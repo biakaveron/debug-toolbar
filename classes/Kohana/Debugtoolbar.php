@@ -79,6 +79,12 @@ abstract class Kohana_Debugtoolbar {
 				->set('total_memory', $queries['memory']);
 		}
 
+		// Configs panel
+		if ($config->panels['configs'] === TRUE)
+		{
+			$template->set('configs', self::get_configs());
+		}
+
 		// Files panel
 		if ($config->panels['files'] === TRUE)
 		{
@@ -457,6 +463,47 @@ abstract class Kohana_Debugtoolbar {
 		$message = 'Application tooks '.number_format($total['total_time'], 3).' seconds and '.text::bytes($total['total_memory']).' memory';
 
 		$firephp->fb(array($message, $table), FirePHP::TABLE);
+	}
+
+	/**
+	 * Collect (custom) configs
+	 *
+	 * @static
+	 * @return array
+	 */
+	public static function get_configs()
+	{
+		$inc_paths = Kohana::include_paths();
+		// delete SYSPATH
+		array_pop($inc_paths);
+
+		$configs = array();
+
+		foreach ($inc_paths as $inc_path)
+		{
+			foreach ((array)glob($inc_path.'/config/*.php') as $filename)
+			{
+				$filename = pathinfo($filename, PATHINFO_FILENAME);
+
+				if (in_array($filename, (array)Kohana::$config->load('debug_toolbar.skip_configs'))) {
+					continue;
+				}
+
+				if ( ! isset($configs[$filename])) {
+					try {
+						$configs[$filename] = Kohana::$config->load($filename)->as_array();
+					}
+					catch (Exception $e)
+					{
+						$configs[$filename] = NULL;
+					}
+				}
+			}
+		}
+
+		ksort($configs);
+
+		return $configs;
 	}
 
 	/**
