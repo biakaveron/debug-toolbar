@@ -1,5 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
-
+<?php defined('SYSPATH') OR die('No direct script access.');
 /**
  * Kohana v3 Debug Toolbar
  *
@@ -8,4 +7,4 @@
  * @author  Brotkin Ivan (BIakaVeron) <BIakaVeron@gmail.com>
  * @author  Sergei Gladkovskiy <smgladkovskiy@gmail.com>
  */
-abstract class Debugtoolbar extends Kohana_Debugtoolbar {}
+class DebugToolBar extends Kohana_DebugToolBar {}

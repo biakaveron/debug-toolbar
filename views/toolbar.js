@@ -86,8 +86,8 @@ var debugToolbar = {
  * Test for javascript libraries
  * (only supports jQuery at the moment
  */
-if (typeof jQuery != 'undefined') {
-
+if (typeof jQuery != 'undefined')
+{
 	$(document).ready(function(){
 
 		// display ajax button in toolbar
@@ -116,8 +116,4 @@ if (typeof jQuery != 'undefined') {
 
 		});
 	});
-}
-
-if (typeof Prototype != 'undefined') {
-
 }

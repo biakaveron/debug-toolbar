@@ -1,9 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.') ?>
+<?php defined('SYSPATH') OR die('No direct script access.') ?>
 
 <!-- CSS styles (if not added to <head>) -->
+<style type="text/css">
 <?php if (isset($styles)): ?>
 	<?php echo $styles ?>
 <?php endif ?>
+</style>
 
 <!-- Javascript -->
 <script type="text/javascript">
