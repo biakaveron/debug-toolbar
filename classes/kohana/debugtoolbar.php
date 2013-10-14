@@ -211,9 +211,14 @@ abstract class Kohana_DebugToolbar {
 		foreach(self::$_custom_sections as $section)
 		{
 			list($title, $data, $logo) = $section;
+			if ( ! is_string($data) && is_callable($data))
+			{
+				$data = call_user_func($data);
+			}
+
 			$result[] = array(
-				'title'    => is_callable($title) ? call_user_func($title) : (string)$title,
-				'content'  => is_callable($data) ? call_user_func($data) : $data,
+				'title'    => ! is_string($title) && is_callable($title) ? call_user_func($title) : (string)$title,
+				'content'  => is_string($data) ? $data : Debug::dump($data),
 				'logo'     => $logo
 			);
 		}
