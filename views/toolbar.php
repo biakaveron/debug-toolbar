@@ -379,6 +379,7 @@
 	<?php if (Kohana::$config->load('debug_toolbar.panels.customs') && count($sections) > 0): ?>
 		<?php foreach($sections as $num => $section) : ?>
 		<div id="debug-custom-section-<?php echo $num ?>" class="top" style="display: none;">
+			<h1><?php echo $section['title'] ?></h1>
 			<div>
 				<?php echo $section['content'] ?>
 			</div>
