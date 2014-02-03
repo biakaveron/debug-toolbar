@@ -576,9 +576,13 @@ abstract class Kohana_Debugtoolbar {
 			return FALSE;
 		}
 
-		if ( ! empty($config->excluded_routes) && in_array(Route::name(Request::initial()->route()), $config->excluded_routes))
+		if ( ! empty($config->excluded_routes))
 		{
-			return FALSE;
+			$route = Request::initial()->route();
+			if ($route && in_array(Route::name($route), $config->excluded_routes))
+			{
+				return FALSE;
+			}
 		}
 
 		return TRUE;
