@@ -496,7 +496,10 @@ abstract class Kohana_Debugtoolbar {
 
 				if ( ! isset($configs[$filename])) {
 					try {
-						$configs[$filename] = Kohana::$config->load($filename)->as_array();
+						$config_file = Kohana::$config->load($filename);
+						if (is_object($config_file)) {
+							$configs[$filename] = $config_file->as_array();
+						}
 					}
 					catch (Exception $e)
 					{
