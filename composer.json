@@ -1,0 +1,9 @@
+{
+    "name": "zhibek/debug-toolbar",
+    "type": "library",
+    "homepage": "https://github.com/zhibek/debug-toolbar",
+    "require": {
+        "firephp/firephp-core": "dev-master"
+    }
+}
+
